@@ -2,3 +2,6 @@ Busy Program 活动日志
 =====================
 
 项目启动，开始记录活动...
+运行于 main.py 在 /home/runner/work/Busy-Program/Busy-Program
+错误: Invalid \escape: line 8 column 705 (char 4439)
+运行完成
