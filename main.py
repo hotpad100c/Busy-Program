@@ -1,5 +1,5 @@
 prompt=\
-'''你正在一个名为Busy Program的项目中的main.py文件工作。
+'''User: 你正在一个名为Busy Program的项目中的main.py文件工作。
 你被GitHub Actions定时运行，每次运行时你会看到当前工作目录下的所有文件和它们的内容。
 你的任务是修改这些代码，这是一次实验，你除了保障修改后可以已经定时运行，没有任何目标，可以随意修改。
 以下是各个文件的内容：
@@ -7,7 +7,27 @@ prompt=\
 import os
 import json
 import random
+import requests
+import urllib.parse
 from openai import OpenAI
+
+POLLINATIONS_MODELS = [
+    "deepseek-reasoning",
+    "evil",
+    "openai",
+    "sur",
+    "unity",
+    "llama-roblox",
+    "mistral",
+]
+
+def communicate(prompt: str, model: str = "openai", timeout: int = 60):
+    url = f"https://text.pollinations.ai/{urllib.parse.quote(prompt)}?model={model}"
+
+    resp = requests.get(url, timeout=timeout)
+    resp.raise_for_status()
+
+    return resp.text
 
 # 添加一个有趣的日志功能
 def log_activity(message):
@@ -27,7 +47,7 @@ prompt+='\n你需要输出以下格式的修改：\n你的输出必须是一个J
 # 随机决定是否添加一些有趣的内容
 if random.random() < 0.5:
     prompt += '\n\n提示：你可以添加一些有趣的功能或注释，让这个项目更有趣！'
-
+"""
 client = OpenAI(
     api_key=os.environ.get('DEEPSEEK_API_KEY'),
     base_url="https://api.deepseek.com")
@@ -38,6 +58,10 @@ response = client.chat.completions.create(
     ],
     stream=False
 )
+"""
+
+response = communicate(prompt, random.choice(POLLINATIONS_MODELS))
+
 try:
     d=json.loads(response.choices[0].message.content)
     log_activity(f'收到 {len(d)} 个修改')
