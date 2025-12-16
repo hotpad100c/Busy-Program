@@ -68,7 +68,7 @@ response = client.chat.completions.create(
 
 model = random.choice(POLLINATIONS_MODELS)
 
-log_activity(f'模型： {model}')
+# log_activity(f'模型： {model}')
 
 response = communicate(prompt, "openai")
 
