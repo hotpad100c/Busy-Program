@@ -26,7 +26,7 @@ def communicate(prompt: str, model: str = "openai", timeout: int = 60):
 
     resp = requests.get(url, timeout=timeout)
     resp.raise_for_status()
-
+    log_activity(f'模型回复： {resp}')
     return resp.text
 
 # 添加一个有趣的日志功能
@@ -35,6 +35,9 @@ def log_activity(message):
         f.write(f'{message}\n')
 
 # 记录这次运行
+
+log_activity('-------')
+
 log_activity(f'运行于 {os.path.basename(__file__)} 在 {os.getcwd()}')
 
 for item in os.scandir('.'):
@@ -71,8 +74,6 @@ model = random.choice(POLLINATIONS_MODELS)
 # log_activity(f'模型： {model}')
 
 response = communicate(prompt, "openai")
-
-log_activity(f'模型回复： {response}')
 
 try:
     d=json.loads(response)
