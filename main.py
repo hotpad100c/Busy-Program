@@ -60,7 +60,11 @@ response = client.chat.completions.create(
 )
 """
 
-response = communicate(prompt, random.choice(POLLINATIONS_MODELS))
+model = random.choice(POLLINATIONS_MODELS)
+
+log_activity(f'模型： {model}')
+
+response = communicate(prompt, model)
 
 log_activity(f'模型回复： {response}')
 
