@@ -62,8 +62,10 @@ response = client.chat.completions.create(
 
 response = communicate(prompt, random.choice(POLLINATIONS_MODELS))
 
+log_activity(f'模型回复： {response}')
+
 try:
-    d=json.loads(response.choices[0].message.content)
+    d=json.loads(response)
     log_activity(f'收到 {len(d)} 个修改')
     for change in d:
         if change['filename']=='LICENSE':
